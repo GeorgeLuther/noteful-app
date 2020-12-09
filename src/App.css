@@ -51,3 +51,8 @@ nav ul li:hover {
     width: 50px;
     justify-self: flex-end;
 }
+.notFound {
+    padding: 16px;
+    color: red;
+    background-color: rgb(26, 26, 26);
+}

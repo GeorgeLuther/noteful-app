@@ -1,9 +1,24 @@
 import React from 'react'
+import APIContext from '../APIContext'
+import { findNote, findFolder } from '../GlobalFuncs'
 
 export default class NoteSidebar extends React.Component {
+    //pass the params
+    static defaultProps = {
+        match: {
+            params: {}
+        }
+    }
+    //pass the folders and notes
+    static contextType = APIContext
+    
     render() {
-        const currentNote = this.props.notes.find(note => note.id === this.props.match.params.noteId)
-        const currentFolder = this.props.folders.find(folder => folder.id === currentNote.folderId)
+        const { notes=[], folders=[] } = this.context
+        const { noteId } = this.props.match.params
+        
+        const currentNote = findNote(notes, noteId) || {}
+        const currentFolder = !currentNote.folderId ? {name:''} : findFolder(folders, currentNote.folderId)
+        console.log(currentFolder)
         return (
             <section>
                 <h2>{currentFolder.name}</h2>

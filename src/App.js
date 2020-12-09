@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 
-import dummyStore from './dummy-store';
+import APIContext from './APIContext'
+
+import BASE_URL from './GlobalFuncs'
 
 import './App.css'
 
@@ -12,16 +14,50 @@ import FolderContents from './folder/FolderContents'
 import Note from './note/Note'
 import NotFoundMain from './main/NotFoundMain'
 
+
 class App extends React.Component {
   state = {
-    folders: dummyStore.folders,
-    notes: dummyStore.notes
+    folders: [],
+    notes: [].notes
   }
-  
+  componentDidMount() {
+
+    Promise.all([
+      fetch(`${BASE_URL}/notes`),
+      fetch(`${BASE_URL}/folders`),
+    ])
+      .then(([notesRes, foldersRes]) => {
+        if (!notesRes.ok)
+          return notesRes.json().then(e => Promise.reject(e))
+        if (!foldersRes.ok)
+          return foldersRes.json().then(e => Promise.reject(e))
+
+        return Promise.all([notesRes.json(), foldersRes.json()])
+      })
+      .then(([notes, folders]) => {
+        this.setState({notes, folders})
+      })
+      .catch(error => {
+        console.error({error})
+      })
+  }
+
+  handleDeleteNote = noteId => {
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== noteId)
+    })
+  }
+
   render(){
-    console.log(this.state)
+    const value = {
+      notes: this.state.notes,
+      folders: this.state.folders,
+      deleteNote: this.handleDeleteNote
+    }
+    
     return (
-      <>
+      <APIContext.Provider value={ value }>
+        <>
         <header>
           <h1><Link className="appTitle" to={'/'}>Noteful</Link></h1>
         </header>
@@ -30,18 +66,18 @@ class App extends React.Component {
             <Switch>
               <Route 
                 exact path='/' 
-                render={(props)=> <FolderSidebar {...props} folders={this.state.folders}/>}
+                component={FolderSidebar}
               />
               <Route 
                 path='/folder/:folderId' 
-                render={(props)=> <FolderSidebar {...props} folders={this.state.folders} />}
+                component={FolderSidebar}
               />
               <Route 
                 path='/note/:noteId' 
-                render={(props)=> <NoteSidebar {...props} notes={this.state.notes} folders={this.state.folders}/>}
+                component={NoteSidebar}
               />
               <Route 
-                render={(props)=> <FolderSidebar {...props} folders={this.state.folders}/>} 
+                component={FolderSidebar}
               />
             </Switch>
           </nav>
@@ -49,21 +85,22 @@ class App extends React.Component {
             <Switch>
               <Route 
                 exact path='/' 
-                render={(props)=> <FolderContents {...props} notes={this.state.notes} />}
+                component={FolderContents}
               />
               <Route 
                 path='/folder/:folderId'
-                render={(props)=> <FolderContents {...props} notes={this.state.notes} />}
+                component={FolderContents}
               />
               <Route 
                 path='/note/:noteId' 
-                render={(props)=> <Note {...props} notes={this.state.notes} />}
-                />
+                component={Note}
+              />
               <Route component={NotFoundMain} />
             </Switch>
           </section>
         </main>
-      </>
+        </>
+      </APIContext.Provider>
     );
   }
 }
