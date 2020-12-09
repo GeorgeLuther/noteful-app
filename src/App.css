@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding:0;
+}
+#root {
+    width: 100%;
+}
+header {
+    background-color: black;
+    text-align: center;
+    padding: 8px 0 8px 0;
+}
+.appTitle {
+    color: white;
+}
+main {
+    display: flex;
+    flex-direction: row;
+}
+nav {
+    flex: 1;
+    border: solid black 2px;
+    background-color: rgb(49, 49, 49);
+}
+.activeFolder {
+    background-color: black;
+}
+nav ul li {
+    border: none;
+    background-color: rgb(27, 27, 27);
+    padding: 8px;
+    margin: 8px;
+    list-style-type: none;
+    color: white;
+}
+nav ul li:hover {
+    cursor: pointer;
+}
+.output {
+    flex: 3;
+}
+.note {
+    list-style-type: none;
+    padding: 8px;
+    border: solid black 1px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.note button {
+    width: 50px;
+    justify-self: flex-end;
+}
