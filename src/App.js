@@ -3,7 +3,7 @@ import { Route, Link, Switch } from 'react-router-dom';
 
 import APIContext from './APIContext'
 
-import BASE_URL from './GlobalFuncs'
+import { BASE_URL } from './GlobalFuncs'
 
 import './App.css'
 
@@ -11,8 +11,13 @@ import FolderSidebar from './folder/FolderSidebar'
 import NoteSidebar from './note/NoteSidebar'
 
 import FolderContents from './folder/FolderContents'
+import AddFolder from './folder/AddFolder'
+
 import Note from './note/Note'
+import AddNote from './note/AddNote'
+
 import NotFoundMain from './main/NotFoundMain'
+
 
 
 class App extends React.Component {
@@ -21,27 +26,28 @@ class App extends React.Component {
     notes: [].notes
   }
   componentDidMount() {
-
-    Promise.all([
-      fetch(`${BASE_URL}/notes`),
-      fetch(`${BASE_URL}/folders`),
-    ])
-      .then(([notesRes, foldersRes]) => {
-        if (!notesRes.ok)
-          return notesRes.json().then(e => Promise.reject(e))
-        if (!foldersRes.ok)
-          return foldersRes.json().then(e => Promise.reject(e))
-
-        return Promise.all([notesRes.json(), foldersRes.json()])
-      })
-      .then(([notes, folders]) => {
-        this.setState({notes, folders})
-      })
-      .catch(error => {
-        console.error({error})
-      })
+    console.log('mounting app!')
+    this.getStateUpdate()
   }
+  getStateUpdate = ()=> {    
+    Promise.all([
+    fetch(`${BASE_URL}/notes`),
+    fetch(`${BASE_URL}/folders`),
+  ])
+    .then(([notesRes, foldersRes]) => {
+      if (!notesRes.ok)
+        return notesRes.json().then(e => Promise.reject(e))
+      if (!foldersRes.ok)
+        return foldersRes.json().then(e => Promise.reject(e))
 
+      return Promise.all([notesRes.json(), foldersRes.json()])
+    })
+    .then(([notes, folders]) => {
+      this.setState({notes, folders})
+    })
+    .catch(error => {
+      console.error({error})
+    })}
   handleDeleteNote = noteId => {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== noteId)
@@ -52,7 +58,8 @@ class App extends React.Component {
     const value = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.handleDeleteNote
+      deleteNote: this.handleDeleteNote,
+      getStateUpdate: this.getStateUpdate 
     }
     
     return (
@@ -86,6 +93,14 @@ class App extends React.Component {
               <Route 
                 exact path='/' 
                 component={FolderContents}
+              />
+              <Route 
+                path='/new-folder'
+                component={AddFolder}
+              />
+              <Route
+                path='/new-note'
+                component={AddNote}
               />
               <Route 
                 path='/folder/:folderId'

@@ -57,6 +57,6 @@ export default class Note extends React.Component {
                 <textarea cols='60' rows='20' value={currentNote.content}></textarea>
             </section>
         )}
-        return ( <Redirect to={'/'}/>)
+        return (<Redirect to={'/'}/>)
     }
 }

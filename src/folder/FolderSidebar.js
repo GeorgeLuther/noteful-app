@@ -7,6 +7,9 @@ export default class FolderSidebar extends React.Component {
     static defaultProps = {
         match: {
             params: {}
+        },
+        history: {
+            push: {}
         }
     }
     //pass the folders and notes
@@ -14,7 +17,6 @@ export default class FolderSidebar extends React.Component {
     render() {
         const { folders=[] } = this.context
         const { folderId } = this.props.match.params
-        console.log(folders)
         const showFolders = () => {
             return folders.map(folder => {
                 return folderId === folder.id
@@ -25,7 +27,7 @@ export default class FolderSidebar extends React.Component {
         return (
             <ul>
                 {showFolders()}
-                <li>Add Folder</li>
+                <li><button type="button" className="add-folder-btn" onClick={e => this.props.history.push('/new-folder')}>Add Folder</button></li>
             </ul>
         )
     }
