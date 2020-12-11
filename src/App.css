@@ -28,7 +28,6 @@ nav {
 }
 nav ul li {
     display: flex;
-    width: 120px;
     border: none;
     background-color: rgb(27, 27, 27);
     padding: 8px;
@@ -46,6 +45,8 @@ nav ul li:hover {
 }
 .output {
     flex: 3;
+}
+.output ul {
     list-style-type: none;
 }
 .note {
@@ -80,6 +81,7 @@ nav ul li:hover {
 .note button {
     width: 50px;
     justify-self: flex-end;
+    list-style-type: none;
 }
 .notFound {
     padding: 16px;

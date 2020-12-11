@@ -16,6 +16,9 @@ import AddFolder from './folder/AddFolder'
 import Note from './note/Note'
 import AddNote from './note/AddNote'
 
+import NavError from './NavError'
+import NoteError from './NoteError'
+
 import NotFoundMain from './main/NotFoundMain'
 
 
@@ -70,25 +73,28 @@ class App extends React.Component {
         </header>
         <main>
           <nav>
-            <Switch>
-              <Route 
-                exact path='/' 
-                component={FolderSidebar}
-              />
-              <Route 
-                path='/folder/:folderId' 
-                component={FolderSidebar}
-              />
-              <Route 
-                path='/note/:noteId' 
-                component={NoteSidebar}
-              />
-              <Route 
-                component={FolderSidebar}
-              />
-            </Switch>
+            <NavError>
+              <Switch>
+                <Route 
+                  exact path='/' 
+                  component={FolderSidebar}
+                />
+                <Route 
+                  path='/folder/:folderId' 
+                  component={FolderSidebar}
+                />
+                <Route 
+                  path='/note/:noteId' 
+                  component={NoteSidebar}
+                />
+                <Route 
+                  component={FolderSidebar}
+                />
+              </Switch>
+            </NavError>
           </nav>
           <section className="output">
+            <NoteError>
             <Switch>
               <Route 
                 exact path='/' 
@@ -112,6 +118,7 @@ class App extends React.Component {
               />
               <Route component={NotFoundMain} />
             </Switch>
+            </NoteError>
           </section>
         </main>
         </>

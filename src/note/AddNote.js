@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { BASE_URL } from '../GlobalFuncs'
 import APIContext from '../APIContext'
 
+import PostError from '../PostError'
 
 export default class AddNote extends React.Component {
     state= {
@@ -86,39 +87,41 @@ export default class AddNote extends React.Component {
             })
         }
         return (
-            <section className="addNewNote">
-                <form className="new-note-form" onSubmit={e => handleSubmitNote(e)}>
-                    <h2>Create a New Note</h2>
-                    <label htmlFor="folder-input">Name:</label>
-                    <input 
-                        type="text"
-                        id="name-input"
-                        onChange={e => this.updateName(e.target.value)}
-                    ></input>
-                    <p className="errors">{this.state.name.touched ? this.validateName() : ''}</p>
-                    <label htmlFor="content-input">Note:</label>
-                    <textarea
-                        type="text"
-                        id="content-input"
-                        onChange={e => this.updateContent(e.target.value)}
-                        rows={20}
-                    ></textarea>
-                    <label htmlFor="folder-selection">Folder:</label>
-                    <select
-                        id="folder-selection"
-                        onChange={e => this.updateFolder(e.target.value)}
-                    >
-                        {folderOptions()}
-                    </select>
-                    <button 
-                        className="submit-note"
-                        type="submit"
-                        disabled={
-                            this.validateName()
-                        }
-                    >Add Note</button>
-                </form>
-            </section>
+            <PostError>
+                <section className="addNewNote">
+                    <form className="new-note-form" onSubmit={e => handleSubmitNote(e)}>
+                        <h2>Create a New Note</h2>
+                        <label htmlFor="folder-input">Name:</label>
+                        <input 
+                            type="text"
+                            id="name-input"
+                            onChange={e => this.updateName(e.target.value)}
+                        ></input>
+                        <p className="errors">{this.state.name.touched ? this.validateName() : ''}</p>
+                        <label htmlFor="content-input">Note:</label>
+                        <textarea
+                            type="text"
+                            id="content-input"
+                            onChange={e => this.updateContent(e.target.value)}
+                            rows={20}
+                        ></textarea>
+                        <label htmlFor="folder-selection">Folder:</label>
+                        <select
+                            id="folder-selection"
+                            onChange={e => this.updateFolder(e.target.value)}
+                        >
+                            {folderOptions()}
+                        </select>
+                        <button 
+                            className="submit-note"
+                            type="submit"
+                            disabled={
+                                this.validateName()
+                            }
+                        >Add Note</button>
+                    </form>
+                </section>
+            </PostError>
         )
     }
 }

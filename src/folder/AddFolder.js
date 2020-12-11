@@ -2,6 +2,8 @@ import React from 'react'
 import { BASE_URL } from '../GlobalFuncs'
 import APIContext from '../APIContext'
 
+import PostError from '../PostError'
+
 
 export default class AddFolder extends React.Component {
     state= {
@@ -59,24 +61,26 @@ export default class AddFolder extends React.Component {
               })
         }
         return (
-            <section className="addNewFolder">
-                <form className="new-folder-form" onSubmit={e => handleSubmitFolder(e)}>
-                    <h2>Create a New Folder</h2>
-                    <label htmlFor="folder-input">Folder name:</label>
-                    <input 
-                        type="text"
-                        id="folder-input"
-                        onChange={e => this.updateName(e.target.value)}
-                    ></input>
-                    <button 
-                        type="submit"
-                        disabled={
-                            this.validateName()
-                        }
-                    >Add folder</button>
-                    <p className="errors">{this.state.name.touched ? this.validateName() : ''}</p>
-                </form>
-            </section>
+            <PostError>
+                <section className="addNewFolder">
+                    <form className="new-folder-form" onSubmit={e => handleSubmitFolder(e)}>
+                        <h2>Create a New Folder</h2>
+                        <label htmlFor="folder-input">Folder name:</label>
+                        <input 
+                            type="text"
+                            id="folder-input"
+                            onChange={e => this.updateName(e.target.value)}
+                        ></input>
+                        <button 
+                            type="submit"
+                            disabled={
+                                this.validateName()
+                            }
+                        >Add folder</button>
+                        <p className="errors">{this.state.name.touched ? this.validateName() : ''}</p>
+                    </form>
+                </section>'
+            </PostError>
         )
     }
 }
