@@ -1,6 +1,7 @@
 import React from 'react'
 import APIContext from '../APIContext'
 import { findNote, findFolder } from '../GlobalFuncs'
+import PropTypes from 'prop-types'
 
 export default class NoteSidebar extends React.Component {
     //pass the params
@@ -25,4 +26,7 @@ export default class NoteSidebar extends React.Component {
             </section>
         )
     }
+}
+NoteSidebar.propTypes = {
+    match: PropTypes.object.isRequired,
 }
