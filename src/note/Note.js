@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { format } from 'date-fns'
+import PropTypes from 'prop-types'
 
 import { BASE_URL, findNote } from '../GlobalFuncs'
 
@@ -59,4 +60,10 @@ export default class Note extends React.Component {
         )}
         return (<Redirect to={'/'}/>)
     }
+}
+
+Note.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  onDeleteNote: PropTypes.func
 }

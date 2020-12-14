@@ -1,6 +1,7 @@
 import React from 'react'
 import { BASE_URL } from '../GlobalFuncs'
 import APIContext from '../APIContext'
+import PropTypes from 'prop-types'
 
 import PostError from '../PostError'
 
@@ -83,4 +84,10 @@ export default class AddFolder extends React.Component {
             </PostError>
         )
     }
+}
+
+AddFolder.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  onAddFolder: PropTypes.func
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import APIContext from '../APIContext'
+import PropTypes from 'prop-types'
 
 export default class FolderSidebar extends React.Component {
     //pass the params
@@ -31,4 +32,9 @@ export default class FolderSidebar extends React.Component {
             </ul>
         )
     }
+}
+
+FolderSidebar.propTypes = {
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
 }

@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import { Link, Redirect } from 'react-router-dom'
 import APIContext from '../APIContext'
 import { getNotes, BASE_URL } from '../GlobalFuncs'
-
+import PropTypes from 'prop-types'
 
 export default class FolderContents extends React.Component {
     //pass the params
@@ -62,3 +62,8 @@ export default class FolderContents extends React.Component {
         return (<Redirect to={'/'}/>)
     }
 } 
+
+FolderContents.propTypes = {
+  match: PropTypes.object.isRequired,
+  onDeleteNote: PropTypes.func,
+}

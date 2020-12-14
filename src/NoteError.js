@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class NoteError extends React.Component {
     state = {
@@ -13,4 +14,9 @@ export default class NoteError extends React.Component {
         }
         return this.props.children
     }
+}
+
+
+NoteError.propTypes = {
+    children: PropTypes.element
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { format } from 'date-fns'
 import { BASE_URL } from '../GlobalFuncs'
+import PropTypes from 'prop-types'
 import APIContext from '../APIContext'
 
 import PostError from '../PostError'
@@ -27,7 +28,6 @@ export default class AddNote extends React.Component {
         history: {
             goBack: ()=>{}
         },
-        onAddFolder: () => {}
     }
     //pass the folders and notes
     static contextType = APIContext
@@ -124,4 +124,9 @@ export default class AddNote extends React.Component {
             </PostError>
         )
     }
+}
+
+AddNote.propTypes = {
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
 }
