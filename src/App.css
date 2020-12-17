@@ -56,6 +56,8 @@ nav ul li:hover {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+    background-color: rgb(33, 38, 42);
+    color:aliceblue;
 }
 .new-note-form {
     display: flex;
@@ -112,4 +114,10 @@ nav ul li:hover {
     margin-top: 4px;
     width: 300px;
     text-align: center;
+}
+a:visited {
+    color: white;
+}
+a {
+    color: rgb(163, 255, 140);
 }
