@@ -44,13 +44,20 @@ export default class AddNote extends React.Component {
     validateContent() {
         const name = this.state.name.value.trim()
         if (name.length === 0) {
-            return "Name is required"
+            return "Note is required"
+        }
+    }
+    validateFolder() {
+        const folder = this.state.folder.value.trim()
+        if (folder.length === 0) {
+            return "Folder is required"
         }
     }
     updateContent(content) {
         this.setState({ content: { value: content, touched: true } });
     }
     updateFolder(id) {
+        console.log('folder:',id)
         this.setState({ folder: { value: id, touched: true } });
     }
 
@@ -71,11 +78,10 @@ export default class AddNote extends React.Component {
               .then(res => {
                 if (!res.ok)
                   throw new Error('Cannot add this note')
-                return res.json()
               })
               .then((data) => {
-                this.context.getStateUpdate()
-                this.props.history.goBack()
+                this.context.getStateUpdate(data)
+                this.props.history.push('/')
               })
               .catch(error => {
                 console.error({ error })
@@ -87,7 +93,7 @@ export default class AddNote extends React.Component {
             })
         }
         return (
-            <PostError>
+            <PostError >
                 <section className="addNewNote">
                     <form className="new-note-form" onSubmit={e => handleSubmitNote(e)}>
                         <h2>Create a New Note</h2>
@@ -116,7 +122,7 @@ export default class AddNote extends React.Component {
                             className="submit-note"
                             type="submit"
                             disabled={
-                                this.validateName()
+                                this.validateName() || this.validateContent() || this.validateFolder()
                             }
                         >Add Note</button>
                     </form>

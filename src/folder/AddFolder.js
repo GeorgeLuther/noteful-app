@@ -17,13 +17,38 @@ export default class AddFolder extends React.Component {
         match: {
             params: {}
         },
-        history: {
-            goBack: ()=>{}
-        },
+        // history: {
+        //     goBack: ()=>{}
+        // },
         onAddFolder: () => {}
     }
     //pass the folders and notes
     static contextType = APIContext
+    
+    handleSubmitFolder = e => {
+        e.preventDefault()
+        console.log(this.state.name.value)
+        fetch(`${BASE_URL}/folders`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({ folder_name: this.state.name.value })
+        })
+          .then(res => {
+            console.log('folder res',res)
+            if (!res.ok)
+              throw new Error('Cannot add this folder')
+            //return res.json()
+          })
+          .then((data) => {
+            this.context.getStateUpdate()
+            this.props.history.push('/')
+          })
+          .catch(error => {
+            console.error({ error })
+          })
+    }
 
     validateName() {
         const name = this.state.name.value.trim()
@@ -38,33 +63,11 @@ export default class AddFolder extends React.Component {
     }
 
     render() { 
-        const handleSubmitFolder = e => {
-            e.preventDefault()
-            console.log(this.state.name.value)
-            fetch(`${BASE_URL}/folders`, {
-              method: 'POST',
-              headers: {
-                'content-type': 'application/json'
-              },
-              body: JSON.stringify({ name: this.state.name.value })
-            })
-              .then(res => {
-                if (!res.ok)
-                  throw new Error('Cannot add this folder')
-                return res.json()
-              })
-              .then((data) => {
-                this.context.getStateUpdate()
-                this.props.history.goBack()
-              })
-              .catch(error => {
-                console.error({ error })
-              })
-        }
+        
         return (
             <PostError>
                 <section className="addNewFolder">
-                    <form className="new-folder-form" onSubmit={e => handleSubmitFolder(e)}>
+                    <form className="new-folder-form" onSubmit={e => this.handleSubmitFolder(e)}>
                         <h2>Create a New Folder</h2>
                         <label htmlFor="folder-input">Folder name:</label>
                         <input 
@@ -80,7 +83,7 @@ export default class AddFolder extends React.Component {
                         >Add folder</button>
                         <p className="errors">{this.state.name.touched ? this.validateName() : ''}</p>
                     </form>
-                </section>'
+                </section>
             </PostError>
         )
     }

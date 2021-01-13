@@ -18,6 +18,7 @@ export default class FolderSidebar extends React.Component {
     render() {
         const { folders=[] } = this.context
         const { folderId } = this.props.match.params
+        console.log('myfolder',folderId)
         const showFolders = () => {
             return folders.map(folder => {
                 return folderId === folder.id

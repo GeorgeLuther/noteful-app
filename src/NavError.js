@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class PostError extends React.Component {
+export default class NavError extends React.Component {
     state = {
         hasError: false
     }
@@ -16,6 +16,6 @@ export default class PostError extends React.Component {
     }
 }
 
-PostError.propTypes = {
+NavError.propTypes = {
     children: PropTypes.element
 }

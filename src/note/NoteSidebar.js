@@ -1,7 +1,8 @@
 import React from 'react'
 import APIContext from '../APIContext'
-import { findNote, findFolder } from '../GlobalFuncs'
+import { findFolder } from '../GlobalFuncs'
 import PropTypes from 'prop-types'
+import Note from '../note/Note'
 
 export default class NoteSidebar extends React.Component {
     //pass the params
@@ -16,10 +17,10 @@ export default class NoteSidebar extends React.Component {
     render() {
         const { notes=[], folders=[] } = this.context
         const { noteId } = this.props.match.params
-        
-        const currentNote = findNote(notes, noteId) || {}
+        const currentNote=notes.find(note => note.id = noteId)
+        console.log('boom',currentNote)
         const currentFolder = !currentNote.folderId ? {name:''} : findFolder(folders, currentNote.folderId)
-        console.log(currentFolder)
+        
         return (
             <section>
                 <h2>{currentFolder.name}</h2>

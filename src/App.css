@@ -23,8 +23,7 @@ nav {
     background-color: rgb(49, 49, 49);
 }
 .activeFolder, nav ul li {
-    background-color: rgb(70, 19, 19);
-    transition: background-color .2s;
+    background-color: rgb(168, 50, 50);
 }
 nav ul li {
     display: flex;

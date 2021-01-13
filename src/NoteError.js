@@ -18,5 +18,5 @@ export default class NoteError extends React.Component {
 
 
 NoteError.propTypes = {
-    children: PropTypes.element
+    children: PropTypes.object
 }

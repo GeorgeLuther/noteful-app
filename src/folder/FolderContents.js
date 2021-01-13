@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { format } from 'date-fns'
 import { Link, Redirect } from 'react-router-dom'
 import APIContext from '../APIContext'
 import { getNotes, BASE_URL } from '../GlobalFuncs'
@@ -42,16 +42,24 @@ export default class FolderContents extends React.Component {
 
     render() { 
         const { notes=[] } = this.context
+        console.log('params',this.props.match.params)
         const { folderId } = this.props.match.params
-      
+ 
         const displayNotes = () => {
-            const notesToShow = getNotes(notes, folderId)
+            let notesToShow = notes
+            
+            if (folderId) {
+              notesToShow = notes.filter(note => note.folderId == folderId)
+            }
+
             return notesToShow.map(note => {
+              let date = new Date(note.modified);
+              let formatted = format(date, 'do LLL yyyy');
                 return (
                     <li key={note.id} className='note'>
                         {/* add link to note */}
                         <h2><Link to={`/note/${note.id}`}>{note.name}</Link></h2>
-                        <p>Date modified: {note.modified}</p>
+                        <p>Date modified: {formatted}</p>
                         <button type="button" name={note.id} onClick={this.handleClickDelete}>Delete Note</button>
                     </li>
                 )
@@ -66,6 +74,29 @@ export default class FolderContents extends React.Component {
         )}
         return (<Redirect to={'/'}/>)
     }
+    // render(){
+    //   const { folderId } = this.props.match.params
+    //   const { notes=[] } = this.context
+    //   const notesForFolder = getNotes(notes, folderId)
+    //   console.log('note', notesForFolder)
+    //   return (
+    //     <section>
+    //       <ul>
+    //         {notesForFolder.map(note =>
+    //           <li key={note.id}>
+    //             <Note 
+    //               id={note.id}
+    //               name={note.name}
+    //               modified={note.modified}
+    //               content={note.content}
+    //             />
+    //           </li>
+    //           )}
+    //       </ul>
+
+    //     </section>
+    //   )
+    // }
 } 
 
 FolderContents.propTypes = {

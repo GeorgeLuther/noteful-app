@@ -21,8 +21,6 @@ import NoteError from './NoteError'
 
 import NotFoundMain from './main/NotFoundMain'
 
-
-
 class App extends React.Component {
   state = {
     folders: [],
@@ -31,6 +29,7 @@ class App extends React.Component {
   componentDidMount() {
     console.log('mounting app!')
     this.getStateUpdate()
+    console.log('get state!', this.getStateUpdate())
   }
 
   handleDeleteNote = noteId => {
@@ -60,21 +59,73 @@ class App extends React.Component {
       console.error({error})
     })}
 
+    // handleAddFolder = folder => {
+    //   this.setState({
+    //     folder: [...this.state.folders, folder]
+    //   });
+    // };
+
+    // handleAddNote = note => {
+    //   this.setState({
+    //     notes: [...this.state.notes, note]
+    //   });
+    // };
+
+    // renderNavRoutes() {
+    //   return(
+    //     <>
+    //     {['/', '/folder/:folderId'].map(path => {
+    //       <Route
+    //         exact
+    //         key={path}
+    //         path={path}
+    //         component={FolderSidebar}
+    //       />
+    //     })}
+    //     <Route path='/note/:noteId' component={NoteSidebar}/>
+    //     <Route path='/new-folder' component={NoteSidebar}/>
+    //     <Route path='/new-note' component={NoteSidebar}/>
+    //     </>
+    //   )
+    // }
+
+    // renderMainRoutes() {
+    //   return(
+    //     <>
+    //     {['/', '/folder/:folderId'].map(path => {
+    //       <Route
+    //         exact
+    //         key={path}
+    //         path={path}
+    //         component={FolderContents}
+    //       />
+    //     })}
+    //     <Route path='/note/:noteId' component={Note}/>
+    //     <Route path='/new-folder' component={AddFolder}/>
+    //     <Route path='/new-note' component={AddNote}/>
+    //     </>
+    //   )
+    // }
+
   render(){
-    
+    const value = {
+      notes: this.state.notes,
+      folders: this.state.folders,
+      getStateUpdate: this.getStateUpdate,
+      // addNote: this.handleAddNote,
+      // addFolder: this.handleAddFolder,
+      deleteNote: this.handleDeleteNote
+    }
     return (
-      <APIContext.Provider value={{
-        notes: this.state.notes,
-        folders: this.state.folders,
-        deleteNote: this.handleDeleteNote,
-        getStateUpdate: this.getStateUpdate }}>
+      <APIContext.Provider value={value}>
         <>
         <header>
           <h1><Link className="appTitle" to={'/'}>Noteful</Link></h1>
         </header>
         <main>
-          <nav>
+            <nav>
             <NavError>
+              {/* {this.renderNavRoutes()} */}
               <Switch>
                 <Route 
                   exact path='/' 
@@ -93,9 +144,11 @@ class App extends React.Component {
                 />
               </Switch>
             </NavError>
-          </nav>
+            </nav>
+
           <section className="output">
             <NoteError>
+            {/* {this.renderMainRoutes()} */}
             <Switch>
               <Route 
                 exact path='/' 
