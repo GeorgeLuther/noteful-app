@@ -20,7 +20,8 @@ export default class Note extends React.Component {
     }
     //pass the folders and notes
     static contextType = APIContext
-
+    
+    
     render() {
         const { notes=[] } = this.context
         const { noteId } = this.props.match.params
@@ -34,15 +35,19 @@ export default class Note extends React.Component {
               },
             })
               .then(res => {
-                if (!res.ok)
-                  return res.json().then(e => Promise.reject(e))
-                return res.json()
+                
+                if (!res.ok) {
+                  console.log('not ok', res)
+                  return res.send.then(e => Promise.reject(e))
+                }
+                console.log('is ok',res)
+                // return res.json()
               })
               .then(() => {
                 this.context.deleteNote(noteId)
               })
               .catch(error => {
-                console.error({ error })
+                console.error(error)
               })
         }
         

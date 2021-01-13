@@ -26,12 +26,20 @@ import NotFoundMain from './main/NotFoundMain'
 class App extends React.Component {
   state = {
     folders: [],
-    notes: [].notes
+    notes: [],
   }
   componentDidMount() {
     console.log('mounting app!')
     this.getStateUpdate()
   }
+
+  handleDeleteNote = noteId => {
+    console.log('apps handle delete note ')
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== noteId)
+    })
+  }
+
   getStateUpdate = ()=> {    
     Promise.all([
     fetch(`${BASE_URL}/notes`),
@@ -51,22 +59,15 @@ class App extends React.Component {
     .catch(error => {
       console.error({error})
     })}
-  handleDeleteNote = noteId => {
-    this.setState({
-      notes: this.state.notes.filter(note => note.id !== noteId)
-    })
-  }
 
   render(){
-    const value = {
-      notes: this.state.notes,
-      folders: this.state.folders,
-      deleteNote: this.handleDeleteNote,
-      getStateUpdate: this.getStateUpdate 
-    }
     
     return (
-      <APIContext.Provider value={ value }>
+      <APIContext.Provider value={{
+        notes: this.state.notes,
+        folders: this.state.folders,
+        deleteNote: this.handleDeleteNote,
+        getStateUpdate: this.getStateUpdate }}>
         <>
         <header>
           <h1><Link className="appTitle" to={'/'}>Noteful</Link></h1>

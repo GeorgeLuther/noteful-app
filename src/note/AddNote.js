@@ -66,7 +66,7 @@ export default class AddNote extends React.Component {
               headers: {
                 'content-type': 'application/json'
               },
-              body: JSON.stringify({ name: this.state.name.value, modified: now, folderId: this.state.folder.value, content: this.state.content.value})
+              body: JSON.stringify({ title: this.state.name.value, date_modified: now, folder_id: this.state.folder.value, content: this.state.content.value})
             })
               .then(res => {
                 if (!res.ok)

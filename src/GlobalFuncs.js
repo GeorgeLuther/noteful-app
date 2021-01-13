@@ -1,6 +1,6 @@
 // get the notes/folders from state via context
 
-export const BASE_URL = 'http://localhost:9090'
+export const BASE_URL = 'http://localhost:8000'
 
 export const findFolder = (folders=[], folderId) =>  folders.find(folder => folder.id === folderId)
 

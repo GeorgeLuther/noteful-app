@@ -21,8 +21,8 @@ export default class FolderSidebar extends React.Component {
         const showFolders = () => {
             return folders.map(folder => {
                 return folderId === folder.id
-                    ? <li className='activeFolder'><Link key={folder.id} to={`/folder/${folder.id}`}>{folder.name}</Link></li>
-                    : <li><Link key={folder.id} to={`/folder/${folder.id}`}>{folder.name}</Link></li>
+                    ? <li key={folder.id} className='activeFolder'><Link to={`/folder/${folder.id}`}>{folder.name}</Link></li>
+                    : <li key={folder.id}><Link to={`/folder/${folder.id}`}>{folder.name}</Link></li>
             })
         }
         return (
