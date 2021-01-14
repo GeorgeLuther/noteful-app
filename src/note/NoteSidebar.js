@@ -15,8 +15,10 @@ export default class NoteSidebar extends React.Component {
     
     render() {
         const { notes=[], folders=[] } = this.context
+        
         const { noteId } = this.props.match.params
-        const currentNote=notes.find(note => note.id = noteId)
+        console.log('note',noteId)
+        const currentNote=notes.find(note => Number(note.id) === Number(noteId))
         console.log('boom',currentNote)
         const currentFolder = !currentNote.folderId ? {name:''} : findFolder(folders, currentNote.folderId)
         

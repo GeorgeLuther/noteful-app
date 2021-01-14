@@ -43,7 +43,7 @@ export default class FolderContents extends React.Component {
     render() { 
         const { notes=[] } = this.context
         const { folderId } = this.props.match.params
- 
+        console.log('all notes',notes)
         const displayNotes = () => {
             let notesToShow = notes
             

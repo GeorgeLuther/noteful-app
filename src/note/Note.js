@@ -51,7 +51,7 @@ export default class Note extends React.Component {
         const { notes=[] } = this.context
         console.log(notes)
         const { noteId } = this.props.match.params
-        const note=notes.find(note => note.id === noteId)
+        const note=notes.find(note => Number(note.id) === Number(noteId))
         console.log('notey',note)
     
         // const {id, modified, content, folderId } = note
