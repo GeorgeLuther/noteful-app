@@ -42,14 +42,13 @@ export default class FolderContents extends React.Component {
 
     render() { 
         const { notes=[] } = this.context
-        console.log('params',this.props.match.params)
         const { folderId } = this.props.match.params
  
         const displayNotes = () => {
             let notesToShow = notes
             
             if (folderId) {
-              notesToShow = notes.filter(note => note.folderId == folderId)
+              notesToShow = notes.filter(note => (Number(note.folderId) === Number(folderId)) ? note : null)
             }
 
             return notesToShow.map(note => {

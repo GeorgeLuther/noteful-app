@@ -2,7 +2,6 @@ import React from 'react'
 import APIContext from '../APIContext'
 import { findFolder } from '../GlobalFuncs'
 import PropTypes from 'prop-types'
-import Note from '../note/Note'
 
 export default class NoteSidebar extends React.Component {
     //pass the params
