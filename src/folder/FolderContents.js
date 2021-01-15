@@ -33,7 +33,7 @@ export default class FolderContents extends React.Component {
         })
         .then(() => {
           this.context.deleteNote(e.target.name)
-          this.props.history.go(0)
+          this.context.getStateUpdate()
         })
         .catch(error => {
           console.error({ error })
@@ -56,7 +56,6 @@ export default class FolderContents extends React.Component {
               let formatted = format(date, 'do LLL yyyy');
                 return (
                     <li key={note.id} className='note'>
-                        {/* add link to note */}
                         <h2><Link to={`/note/${note.id}`}>{note.name}</Link></h2>
                         <p>Date modified: {formatted}</p>
                         <button type="button" name={note.id} onClick={this.handleClickDelete}>Delete Note</button>
